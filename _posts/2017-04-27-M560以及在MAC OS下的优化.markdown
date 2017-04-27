@@ -1,0 +1,118 @@
+#M560以及在MAC OS下的优化
+3年前买了logitech的G300用来打dota，后来老婆怀孕了，也就没有再玩。由于表现良好，老婆大人给买了个 macbook pro。之后就把G300一起放在电脑包里了。
+本来老婆说买个magic mouse 配套使用，我一看价格：
+	
+APPLE MLA02CH/A Apple Magic Mouse 2 （无线鼠标第二代）
+这特么也太贵了，有这钱我不如买个机械键盘呢！
+￥588京东查看百科详情
+
+赶紧拦住，别买了吧，
+第一，这破玩意不一定用着顺手；
+**第二，这特么也太贵了**
+第三，大家上眼看，这反人类的充电方式(借了张图)；
+	
+	
+总结：贵！不买！(我承认，第一条和第三条，在有钱的情况下，还是可以克服的 )
+就这样G300 服役了3年多到现在，右键偶尔会按不出来，按键也没有以前那么清脆了。
+“换了吧” 老婆大人如是说。于是就有了今天的主角M560。
+电脑包里常放着，手机充电器、数据线、移动硬盘、笔记本电源、G300。线经常互相纠缠在一起。
+所以这次选择了无线的，本来打算买蓝牙的M557，但是看评论，说有时候和wifi冲突，也不知道真假。
+	
+	
+主要还是丑，没法看。	​罗技把200以下的蓝牙鼠标做得这么丑，也真是丧心病狂啊！！
+	最后选择了，M560,银色和MAC放在一起也算是搭配。渠道，狗东只有乐天海淘，价格是400左右，然后就看了下亚马逊，比较奇怪的是，银色的比黑色和白色的都便宜，而且时不时就促销，促销的时候一般价格也就120多，但是加运费就感人了。
+话说这天突然亚马逊给我邮件，看到M560 银色又促销了，就点进去看，结果这次真的很便宜，105.97+23.96 ＝129.93到手。
+感觉划算，然后就下单了。
+8月18日下单，亚马逊预计9月2日到货，结果8月27日到了。快了那么一点点。
+上图咯：
+
+使用感受：
+1. 鼠标有一定的质感，装上电池后重量对我来说适中，左右键声音清脆；
+2. 没有鼠标中键，重压滚轮可以改变滚轮的滚动方式(正常和快速)
+  这个比较有意思，我开始没注意到，儿子拿鼠标玩了会儿后，感觉滚轮怎么有了齿轮的感觉呢，之前是顺滑的没有任何刻度感，后来仔细看了说明书后才知道，重压滚轮是切换正常和快速滚轮两种模式，本来以为是软件加速的调节，原来是物理触感的切换，感觉挺神奇的。
+3. 对windows 优化很好。
+滚轮下面按个按键：按下后鼠标向左滚动，触发开始按钮；
+               按下后鼠标向右移动，触发右边的快捷工具；
+鼠标侧键：上下两个按钮分别对应浏览器的前进和后退；
+4. 续航时间长，按照说明书的说法，一节电池可以使用18个月。
+5. 优联接收器，以后可以配个优联键盘就可以了。
+
+唯一让我不满意的地方就是，在MAC上只能进行基本的操作，多功能键，一个也不能适配。Logitech似乎对MAC的态度就是如此，众多蓝牙适配MAC的键盘，做得都很丑！而且重要的set poit 设置软件没有MAC版的。就连市场占有率非常低的Chrome OS 都可以用set poit。唯独就是不鸟MAC。后来我找到了Logitech 在MAC上设置按键的软件，但是支持设备中并没有M560。
+
+这也就成了我写这篇评测的动力。
+是时候祭出神器[[Karabiner](https://pqrs.org/osx/karabiner)]啦！
+
+这是一个非常优秀的改键工具。
+下载，安装，然后双击图标。
+点击[Misc & Uninstall]
+点击[Open private.xml]
+用编辑器打开private.xml 把里面内容都删掉，把如下代码粘贴进去。
+
+```
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Logitech M560 mouse</name>
+    <appendix>Support for extra buttons</appendix>
+    <item>
+      <name>Forward Button to Capture Full Screen</name>
+      <appendix>Button on the left side of M560</appendix>
+      <identifier>device.logitech.m560.capture.full</identifier>
+      <device_only>DeviceVendor::LOGITECH, DeviceProduct::LOGITECH_USB_RECEIVER</device_only>
+      <autogen>
+        __KeyToKey__
+        KeyCode::COMMAND_R,
+        KeyCode::KEY_3, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+      </autogen>
+    </item>
+
+    <item>
+      <name>Back Button to Capture Selected Area</name>
+      <appendix>Button on the left side of M560</appendix>
+      <identifier>device.logitech.m560.capture.selected</identifier>
+      <device_only>DeviceVendor::LOGITECH, DeviceProduct::LOGITECH_USB_RECEIVER</device_only>
+      <autogen>
+        __KeyToKey__
+        KeyCode::D,
+        KeyCode::KEY_4, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+      </autogen>
+    </item>
+  </item>
+</root>
+```
+保存。
+点击[Chage Key]
+会出现Logitech M560 mouse
+打开折叠，里面会有相应的功能键替换。
+我这里做的修改如下：
+1. 滚轮下面那个按键，是Mission Control按键(默认F9，如果不是，需要到系统设置里确认你的快捷键，然后修改xml就可以了)
+2. 鼠标侧键，上面那个是截全屏(默认 command ＋ shift 3)
+3. 鼠标侧键，下面那个是截选择范围内的屏(默认 command ＋ shift 4)
+
+如果你想修改别的功能，修改代码就好了。
+
+```
+<autogen>
+        __KeyToKey__
+        KeyCode::D,  (这里是鼠标下侧键)
+        KeyCode::KEY_4, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L   (这个是截选择范围内屏的快捷键)
+</autogen>
+```
+
+按照格式修改就好了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
